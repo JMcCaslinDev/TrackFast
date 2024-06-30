@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { sendMagicLink } from './sendMagicLink'; // Correct import path for the server function
 
 const Login = () => {
   const router = useRouter();
@@ -12,15 +13,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('/login/sendMagicLink', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      const data = await response.json();
+      const data = await sendMagicLink(email);
 
       if (data.success) {
         setSuccess('Magic link sent! Please check your email.');

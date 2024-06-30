@@ -4,13 +4,12 @@ import Account from '../mongodb/accountModel';
 import { sendMail } from '../mailgun/sendMail';
 import crypto from 'crypto';
 
-export async function POST(request) {
-  const { email } = await request.json();
+export async function sendMagicLink(email) {
   await connectToDatabase();
 
   const account = await Account.findOne({ email });
   if (!account) {
-    return NextResponse.json({ success: false, message: 'Email not found' }, { status: 404 });
+    return { success: false, message: 'Email not found' };
   }
 
   const token = crypto.randomBytes(32).toString('hex');
@@ -29,5 +28,5 @@ export async function POST(request) {
 
   await sendMail(emailContent);
 
-  return NextResponse.json({ success: true });
+  return { success: true };
 }
