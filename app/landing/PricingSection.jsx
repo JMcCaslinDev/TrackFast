@@ -1,23 +1,22 @@
+'use client';
 import React from 'react';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const PricingSection = () => {
-  const router = useRouter();
-
   return (
-    <section className="pricing-section bg-base-100 overflow-hidden min-h-screen" id="pricing">
+    <section className="pricing-section bg-base-200 overflow-hidden min-h-screen" id="pricing">
       <div className="py-24 px-8 max-w-5xl mx-auto">
         <div className="flex flex-col text-center w-full mb-12">
           <h2 className="max-w-xl font-bold text-3xl lg:text-5xl tracking-tight mb-4 mx-auto">
             Simple, transparent pricing
           </h2>
           <div className="text-base-content-secondary max-w-md mx-auto mb-12">
-            Get full access to JobTrackr with a single payment.
+            Get full access to TrackFast with a single payment.
           </div>
         </div>
         <div className="relative flex justify-center flex-col lg:flex-row items-center lg:items-stretch">
           <div className="card bordered lg:card-side bg-base-300 shadow-xl">
-            <div className="card-body">
+            <div className="card-body p-8">
               <div className="flex flex-wrap gap-2 mb-4">
                 <p className="text-5xl tracking-tight font-extrabold">$29</p>
                 <div className="flex flex-col justify-end">
@@ -45,13 +44,15 @@ const PricingSection = () => {
                 </li>
               </ul>
               <div className="space-y-2">
-                <button className="btn btn-primary btn-block group" onClick={() => router.push('/signup')}>
-                  Get Started
-                  <svg xmlns="http://www.w3.org/2000/svg" className="w-[18px] h-[18px] fill-white/10 group-hover:translate-x-0.5 group-hover:fill-white/20 transition-transform duration-200">
-                    <path d="m3 3 3 9-3 9 19-9Z"></path>
-                    <path d="M6 12h16"></path>
-                  </svg>
-                </button>
+                <Link href="/signup">
+                  <button className="btn btn-primary btn-block group">
+                    Get Started
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-[18px] h-[18px] fill-white/10 group-hover:translate-x-0.5 group-hover:fill-white/20 transition-transform duration-200">
+                      <path d="m3 3 3 9-3 9 19-9Z"></path>
+                      <path d="M6 12h16"></path>
+                    </svg>
+                  </button>
+                </Link>
               </div>
             </div>
           </div>

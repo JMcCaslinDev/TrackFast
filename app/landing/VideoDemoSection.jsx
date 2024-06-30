@@ -6,10 +6,10 @@ const YouTubeSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="text-3xl font-extrabold text-base-content sm:text-4xl">
-            See JobTrackr in Action
+            See TrackFast in Action
           </h2>
           <p className="mt-4 text-xl text-base-content">
-            Watch our video to learn how JobTrackr can simplify your job search.
+            Watch our video to learn how TrackFast can simplify your job search.
           </p>
         </div>
         <div className="mt-12 flex justify-center">
@@ -17,8 +17,8 @@ const YouTubeSection = () => {
             <div className="relative pt-[56.25%]">
               <iframe
                 className="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
-                src="https://www.youtube.com/embed/VIDEO_ID"
-                title="JobTrackr Video"
+                src="https://www.youtube.com/embed/VIDEO_ID" // Replace VIDEO_ID with your actual video ID
+                title="TrackFast Video"
                 allowFullScreen
               ></iframe>
             </div>

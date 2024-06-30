@@ -31,3 +31,33 @@ body {
     text-wrap: balance;
   }
 }
+
+.landing-page {
+  @apply min-h-screen;
+}
+
+.header {
+  @apply z-10 relative;
+}
+
+.hero-section {
+  @apply relative overflow-hidden;
+}
+
+.hero-section::before {
+  content: '';
+  @apply hidden md:block absolute inset-0 z-0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.13) 0%, rgba(6, 171, 120, 0.13) 100%);
+}
+
+.features-section {
+  @apply bg-base-100;
+}
+
+.pricing-section {
+  @apply bg-base-200;
+}
+
+.footer {
+  @apply bg-base-300/50 border-t border-base-content/10;
+}

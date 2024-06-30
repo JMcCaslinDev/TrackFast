@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 
 const FAQSection = () => {
@@ -5,40 +7,40 @@ const FAQSection = () => {
 
   const faqs = [
     {
-      question: 'Why do I need JobTrackr?',
+      question: 'Why do I need TrackFast?',
       answer: 'To streamline job search and save time during the process.',
     },
     {
-      question: 'Is there a subscription model for JobTrackr?',
-      answer: 'No, JobTrackr is available through a one-time purchase of $29 only.',
+      question: 'Is there a subscription model for TrackFast?',
+      answer: 'No, TrackFast is available through a one-time purchase of $29 only.',
     },
     {
-      question: 'Does JobTrackr support application tracking for multiple job platforms?',
-      answer: 'Yes, JobTrackr supports tracking applications from multiple job platforms including LinkedIn and Indeed.',
+      question: 'Does TrackFast support application tracking for multiple job platforms?',
+      answer: 'Yes, TrackFast supports tracking applications from multiple job platforms including LinkedIn and Indeed.',
     },
     {
-      question: 'Can I use JobTrackr on mobile devices?',
-      answer: 'JobTrackr is optimized for use on desktop browsers to provide the best user experience.',
+      question: 'Can I use TrackFast on mobile devices?',
+      answer: 'TrackFast is optimized for use on desktop browsers to provide the best user experience.',
     },
     {
-      question: 'Is my personal information secure with JobTrackr?',
+      question: 'Is my personal information secure with TrackFast?',
       answer: 'Absolutely, we use advanced encryption to ensure all your data is secure.',
     },
     {
-      question: 'Can I manually add job applications to JobTrackr?',
-      answer: 'Yes, you can manually enter each job application\'s details into JobTrackr.',
+      question: 'Can I manually add job applications to TrackFast?',
+      answer: 'Yes, you can manually enter each job application\'s details into TrackFast.',
     },
     {
-      question: 'Are there any hidden fees or additional costs with JobTrackr?',
+      question: 'Are there any hidden fees or additional costs with TrackFast?',
       answer: 'No, there are no hidden fees; the one-time purchase gives you full access to all features.',
     },
     {
-      question: 'How can I update my job application information in JobTrackr?',
-      answer: 'You can easily update or modify any application details at any time within JobTrackr.',
+      question: 'How can I update my job application information in TrackFast?',
+      answer: 'You can easily update or modify any application details at any time within TrackFast.',
     },
     {
-      question: 'How often is JobTrackr updated with new features?',
-      answer: 'We continuously work to improve JobTrackr and release updates as new features are developed.',
+      question: 'How often is TrackFast updated with new features?',
+      answer: 'We continuously work to improve TrackFast and release updates as new features are developed.',
     },
   ];
 

@@ -5,7 +5,7 @@ const ComparisonSection = () => {
     <section className="bg-base-300 text-base-content">
       <div className="max-w-5xl mx-auto px-8 py-24 md:py-36">
         <h2 className="text-center font-extrabold text-4xl md:text-5xl tracking-tight mb-16 md:mb-20">
-          Simplify Your Job Search with JobTrackr
+          Simplify Your Job Search with TrackFast
         </h2>
         <div className="px-4 py-8 md:py-10">
           <div className="flex flex-col md:flex-row justify-center items-center md:items-start gap-12 md:gap-16">
@@ -33,7 +33,7 @@ const ComparisonSection = () => {
               </ul>
             </div>
             <div className="bg-emerald-200 text-emerald-700 p-8 md:p-12 rounded-lg w-full max-w-md">
-              <h3 className="font-bold text-lg mb-4">Job Search with JobTrackr</h3>
+              <h3 className="font-bold text-lg mb-4">Job Search with TrackFast</h3>
               <ul className="list-disc list-inside space-y-1.5">
                 <li className="flex gap-2 items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 shrink-0">
