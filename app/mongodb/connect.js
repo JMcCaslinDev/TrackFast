@@ -1,12 +1,19 @@
 import mongoose from 'mongoose';
 
 export async function connectToDatabase() {
-  if (mongoose.connections[0].readyState) {
+  if (mongoose.connection.readyState >= 1) {
     return;
   }
 
-  await mongoose.connect(process.env.MONGODB_URI, {
+  const uri = process.env.MONGODB_URI;
+  if (!uri) {
+    throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
+  }
+
+  await mongoose.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
+
+  console.log('Connected to MongoDB');
 }

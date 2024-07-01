@@ -1,4 +1,5 @@
-import { NextResponse } from 'next/server';
+'use server';
+
 import { connectToDatabase } from '../mongodb/connect';
 import Account from '../mongodb/accountModel';
 import { sendMail } from '../mailgun/sendMail';

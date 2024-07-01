@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, models } from 'mongoose';
 
 const jobApplicationSchema = new Schema({
   account_id: { type: String, required: true },
@@ -18,8 +18,8 @@ const jobApplicationSchema = new Schema({
   job_description: String,
   notes: String,
   pinned: Boolean
-});
+}, { collection: 'job_applications' });
 
-const JobApplication = model('JobApplication', jobApplicationSchema);
+const Job_Application = models.Job_Application || model('Job_Application', jobApplicationSchema);
 
-export default JobApplication;
+export default Job_Application;

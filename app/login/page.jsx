@@ -1,8 +1,8 @@
-'use client'
+'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { sendMagicLink } from './sendMagicLink'; // Correct import path for the server function
+import { sendMagicLink } from './sendMagicLink'; // Import the server function
 
 const Login = () => {
   const router = useRouter();

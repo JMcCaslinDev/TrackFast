@@ -1,7 +1,9 @@
+'use server';
+
 import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
-import { connectToDatabase } from '../mongodb/connect';
-import Account from '../mongodb/accountModel';
+import { connectToDatabase } from '../../mongodb/connect';
+import Account from '../../mongodb/accountModel';
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
@@ -11,7 +13,10 @@ export async function GET(request) {
 
   const account = await Account.findOne({ loginToken: token, tokenExpiry: { $gt: Date.now() } });
   if (!account) {
-    return NextResponse.json({ success: false, message: 'Invalid or expired magic link' }, { status: 401 });
+    return new Response(JSON.stringify({ success: false, message: 'Invalid or expired magic link' }), {
+      status: 401,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 
   const jwtToken = jwt.sign({ userId: account._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
@@ -19,7 +24,7 @@ export async function GET(request) {
   account.tokenExpiry = undefined;
   await account.save();
 
-  const response = NextResponse.redirect('/dashboard');
+  const response = NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/dashboard`);
   response.cookies.set('token', jwtToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',

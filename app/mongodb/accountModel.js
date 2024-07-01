@@ -1,6 +1,6 @@
-import { Schema, model } from 'mongoose';
+import mongoose from 'mongoose';
 
-const accountSchema = new Schema({
+const accountSchema = new mongoose.Schema({
   email: { type: String, required: true },
   loginToken: String,
   tokenExpiry: Date,
@@ -8,6 +8,6 @@ const accountSchema = new Schema({
   daily_application_goal: { type: Number, default: 1 },
 });
 
-const Account = model('Account', accountSchema);
+const Account = mongoose.models.Account || mongoose.model('Account', accountSchema);
 
 export default Account;
