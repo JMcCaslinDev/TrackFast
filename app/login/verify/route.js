@@ -19,7 +19,7 @@ export async function GET(request) {
     });
   }
 
-  const jwtToken = jwt.sign({ userId: account._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+  const jwtToken = jwt.sign({ userId: account._id }, process.env.JWT_SECRET, { expiresIn: '12h' });
   account.loginToken = undefined;
   account.tokenExpiry = undefined;
   await account.save();

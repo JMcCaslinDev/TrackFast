@@ -1,5 +1,7 @@
 'use client';
 
+import dayjs from 'dayjs';
+
 const JobCard = ({ job, onClick }) => (
   <div 
     className="bg-stone-50 p-6 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 cursor-pointer border border-stone-200"
@@ -13,7 +15,7 @@ const JobCard = ({ job, onClick }) => (
     </div>
     <p className="text-stone-600 mb-4">{job.job_title}</p>
     <div className="flex justify-between items-center text-sm text-stone-500">
-      <span>{job.date_applied}</span>
+      <span>{dayjs(job.date_applied).format('MMM D, YYYY')}</span>
     </div>
   </div>
 );

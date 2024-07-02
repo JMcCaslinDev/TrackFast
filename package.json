@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "daisyui": "^4.12.10",
+    "dayjs": "^1.11.11",
     "fs": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.399.0",

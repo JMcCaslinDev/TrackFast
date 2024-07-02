@@ -1,27 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Briefcase, TrendingUp, User, Calendar, X } from 'lucide-react';
+import { Briefcase, TrendingUp, User, Calendar } from 'lucide-react';
 import Modal from './Modal';
 import { getJobApplicationsFromServer } from './server';
-
-const JobCard = ({ job, onClick }) => (
-  <div
-    className="bg-stone-50 p-6 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 cursor-pointer border border-stone-200"
-    onClick={() => onClick(job)}
-  >
-    <div className="flex justify-between items-start mb-2">
-      <h3 className="font-semibold text-lg text-stone-800">{job.company_name}</h3>
-      <span className={`text-xs font-medium px-2 py-1 rounded-full ${getStatusColor(job.application_status)}`}>
-        {job.application_status}
-      </span>
-    </div>
-    <p className="text-stone-600 mb-4">{job.job_title}</p>
-    <div className="flex justify-between items-center text-sm text-stone-500">
-      <span>{job.date_applied}</span>
-    </div>
-  </div>
-);
+import JobCard from './JobCard';
 
 const StatDisplay = ({ icon: Icon, label, value }) => (
   <div className="flex items-center space-x-2">
@@ -32,16 +15,6 @@ const StatDisplay = ({ icon: Icon, label, value }) => (
     </div>
   </div>
 );
-
-const getStatusColor = (status) => {
-  const colors = {
-    Applied: 'bg-amber-100 text-amber-800',
-    Interview: 'bg-sky-100 text-sky-800',
-    Offer: 'bg-emerald-100 text-emerald-800',
-    Rejected: 'bg-rose-100 text-rose-800'
-  };
-  return colors[status] || 'bg-stone-200 text-stone-800';
-};
 
 const DashboardPage = () => {
   const [jobEntries, setJobEntries] = useState([]);
@@ -70,6 +43,9 @@ const DashboardPage = () => {
     setJobEntries(jobEntries.map(job => job._id === editedJob._id ? editedJob : job));
   };
 
+  // Sort jobEntries by date_applied in descending order
+  const sortedJobEntries = [...jobEntries].sort((a, b) => new Date(b.date_applied) - new Date(a.date_applied));
+
   return (
     <div className="min-h-screen bg-stone-100">
       <nav className="bg-white shadow-sm">
@@ -95,7 +71,7 @@ const DashboardPage = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <h2 className="text-2xl font-semibold mb-6 text-stone-800">Your Job Applications</h2>
         <div className="grid grid-cols-3 gap-6 overflow-y-auto max-h-[calc(100vh-200px)]">
-          {jobEntries.map((job) => (
+          {sortedJobEntries.map((job) => (
             <JobCard key={job._id} job={job} onClick={handleJobClick} />
           ))}
         </div>

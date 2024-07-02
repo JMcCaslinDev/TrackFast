@@ -27,7 +27,9 @@ export async function getJobApplicationsFromServer() {
   console.log('User ID from token:', userId); // Debug log
 
   await connectToDatabase();
+  console.log("About to call getJobApplications")
   const jobEntries = await getJobApplications(userId);
 
+  console.log("ABout to return jobEntries")
   return jobEntries;
 }

@@ -1,12 +1,17 @@
-import jwt from 'jsonwebtoken';
 import JobApplication from './jobApplicationModel';
 
-export async function getJobApplications(token) {
+export async function getJobApplications(userId) {
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const userId = decoded.id; // Adjust this according to your JWT payload structure
     console.log('Fetching job applications for user ID:', userId);
-    const jobApplications = await JobApplication.find({ userId }).lean();
+    const jobApplications = await JobApplication.find({ account_id: userId }).lean();
+
+    // Convert date fields to strings
+    jobApplications.forEach(job => {
+      if (job.date_applied) {
+        job.date_applied = job.date_applied.toISOString();
+      }
+    });
+
     console.log('Job applications:', jobApplications);
     return jobApplications;
   } catch (error) {
