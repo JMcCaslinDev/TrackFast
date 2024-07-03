@@ -12,10 +12,7 @@ export async function connectToDatabase() {
     throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
   }
 
-  await mongoose.connect(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  await mongoose.connect(uri);
 
   console.log('Connected to MongoDB');
 }

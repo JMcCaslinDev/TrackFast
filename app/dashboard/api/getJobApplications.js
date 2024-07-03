@@ -6,7 +6,6 @@ import { connectToDatabase } from '../../mongodb/api/connect';
 import { getJobApplications } from '../../mongodb/api/getJobApplications';
 
 export async function getJobApplicationsFromServer() {
-
   const cookieStore = cookies();
   const token = cookieStore.get('token')?.value;
 
@@ -29,9 +28,9 @@ export async function getJobApplicationsFromServer() {
   console.log('User ID from token:', userId); // Debug log
 
   await connectToDatabase();
-  console.log("About to call getJobApplications")
+  console.log('About to call getJobApplications');
   const jobEntries = await getJobApplications(userId);
 
-  console.log("About to return jobEntries")
+  console.log('About to return jobEntries');
   return jobEntries;
 }
