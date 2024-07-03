@@ -27,17 +27,17 @@ const DashboardPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getJobApplicationsFromServer();
-        setJobEntries(data);
-      } catch (error) {
-        console.error('Error fetching job applications:', error);
-      }
-    };
-
-    fetchData();
+    fetchJobApplications();
   }, []);
+
+  const fetchJobApplications = async () => {
+    try {
+      const data = await getJobApplicationsFromServer();
+      setJobEntries(data);
+    } catch (error) {
+      console.error('Error fetching job applications:', error);
+    }
+  };
 
   const handleJobClick = (job) => {
     setSelectedJob(job);
@@ -46,13 +46,12 @@ const DashboardPage = () => {
 
   const handleSaveJob = async (editedJob) => {
     try {
-      let result;
       if (editedJob._id) {
-        result = await editJobApplication(editedJob._id, editedJob);
+        await editJobApplication(editedJob._id, editedJob);
       } else {
-        result = await addJobApplication(editedJob);
+        await addJobApplication(editedJob);
       }
-      setJobEntries(jobEntries.map(job => (job._id === editedJob._id ? result.data : job)));
+      await fetchJobApplications();
       setIsModalOpen(false);
     } catch (error) {
       console.error('Error saving job application:', error);
@@ -62,7 +61,7 @@ const DashboardPage = () => {
   const handleDeleteJob = async (job) => {
     try {
       await deleteJobApplication(job._id);
-      setJobEntries(jobEntries.filter(j => j._id !== job._id));
+      await fetchJobApplications();
     } catch (error) {
       console.error('Error deleting job application:', error);
     }
