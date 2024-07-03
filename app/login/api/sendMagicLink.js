@@ -1,8 +1,8 @@
 'use server';
 
-import { connectToDatabase } from '../mongodb/connect';
-import Account from '../mongodb/accountModel';
-import { sendMail } from '../mailgun/sendMail';
+import { connectToDatabase } from '../../mongodb/api/connect';
+import Account from '../../mongodb/accountModel';
+import { sendMail } from '../../mailgun/api/sendMail';
 import crypto from 'crypto';
 
 export async function sendMagicLink(email) {
@@ -14,16 +14,17 @@ export async function sendMagicLink(email) {
   }
 
   const token = crypto.randomBytes(32).toString('hex');
-  const magicLink = `${process.env.NEXT_PUBLIC_BASE_URL}/login/verify?token=${token}`;
+  const magicLink = `${process.env.NEXT_PUBLIC_BASE_URL}/login/api/verify?token=${token}`;
 
   account.loginToken = token;
-  account.tokenExpiry = Date.now() + 3600000; // Token expiry set to 1 hour
+  let numberOfHours = process.env.numberOfHoursForAuthExpiry;
+  account.tokenExpiry = Date.now() + (3600000 * numberOfHours); // Token expiry set to 1 hour * numberOfHours
   await account.save();
 
   const emailContent = {
-    from: 'YourApp <no-reply@yourapp.com>',
+    from: 'TrackFast <no-reply@TrackFast.io>',
     to: email,
-    subject: 'Your Magic Link',
+    subject: 'Your TrackFast Magic Link!',
     text: `Click the link to login: ${magicLink}`
   };
 

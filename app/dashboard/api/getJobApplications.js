@@ -1,10 +1,12 @@
-'use server'
+'use server';
+
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
-import { connectToDatabase } from './../mongodb/connect';
-import { getJobApplications } from './../mongodb/getJobApplications';
+import { connectToDatabase } from '../../mongodb/api/connect';
+import { getJobApplications } from '../../mongodb/api/getJobApplications';
 
 export async function getJobApplicationsFromServer() {
+
   const cookieStore = cookies();
   const token = cookieStore.get('token')?.value;
 
@@ -30,6 +32,6 @@ export async function getJobApplicationsFromServer() {
   console.log("About to call getJobApplications")
   const jobEntries = await getJobApplications(userId);
 
-  console.log("ABout to return jobEntries")
+  console.log("About to return jobEntries")
   return jobEntries;
 }

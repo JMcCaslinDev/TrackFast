@@ -55,8 +55,8 @@ const Modal = ({ isOpen, onClose, job, onSave, onDelete }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-stone-800 bg-opacity-50 flex items-center justify-center overflow-y-auto">
-      <div className="bg-stone-50 p-6 rounded-lg shadow-xl w-full max-w-lg mt-4 mb-4">
+    <div className="fixed inset-0 bg-stone-800 bg-opacity-50 flex items-center justify-center">
+      <div className="bg-stone-50 p-6 rounded-lg shadow-xl w-full max-w-lg max-h-[80vh] overflow-y-auto my-8">
         <div className="flex justify-between items-center mb-2">
           <h2 className="text-xl font-semibold text-stone-800">{job ? 'Edit' : 'Add'} Job Application</h2>
           <button onClick={onClose} className="text-stone-500 hover:text-stone-700">

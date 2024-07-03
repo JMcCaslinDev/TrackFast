@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { sendMagicLink } from './sendMagicLink'; // Import the server function
+import { sendMagicLink } from './api/sendMagicLink'; // Import the server function
 
 const Login = () => {
   const router = useRouter();

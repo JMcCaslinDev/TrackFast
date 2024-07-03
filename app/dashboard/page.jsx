@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Briefcase, TrendingUp, User, Calendar } from 'lucide-react';
 import Modal from './Modal';
-import { getJobApplicationsFromServer } from './server';
+import { getJobApplicationsFromServer } from './api/getJobApplications';
 import JobCard from './JobCard';
 
 const StatDisplay = ({ icon: Icon, label, value }) => (

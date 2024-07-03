@@ -1,4 +1,6 @@
-import JobApplication from './jobApplicationModel';
+'use server'
+
+import JobApplication from '../jobApplicationModel';
 
 export async function getJobApplications(userId) {
   try {
