@@ -14,7 +14,7 @@ const initialFormData = {
   date_applied: dayjs().format('YYYY-MM-DD'),
   job_description: '',
   notes: '',
-  application_method: 'LinkedIn',
+  application_method: 'Indeed',
   pay_amount: 0,
   pay_amount_max: 0,
   job_posting_url: '',

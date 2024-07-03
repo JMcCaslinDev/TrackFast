@@ -38,7 +38,7 @@ const FeaturesSection = () => {
               </li>
             </ul>
             <div>
-              <Image src="/dashboard.png" alt="TrackFast Dashboard" width={416} height={416} className="rounded-xl w-full sm:w-[26rem] sm:-m-2 sm:p-2 border bg-base-200 object-contain object-center" />
+              <Image src="/logo.svg" alt="TrackFast Dashboard" width={416} height={416} className="rounded-xl w-full sm:w-[26rem] sm:-m-2 sm:p-2 border bg-base-200 object-contain object-center" />
             </div>
           </div>
         </div>
