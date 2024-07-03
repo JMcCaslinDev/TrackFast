@@ -5,7 +5,7 @@ const accountSchema = new mongoose.Schema({
   loginToken: String,
   tokenExpiry: Date,
   created_at: { type: Date, default: Date.now },
-  daily_application_goal: { type: Number, default: 1 },
+  daily_application_goal: { type: Number, default: 10 },
 });
 
 const Account = mongoose.models.Account || mongoose.model('Account', accountSchema);

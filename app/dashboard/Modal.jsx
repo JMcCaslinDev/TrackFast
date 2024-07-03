@@ -28,6 +28,7 @@ const getCurrentFormData = () => ({
 
 const Modal = ({ isOpen, onClose, job, onSave, onDelete }) => {
   const [editedJob, setEditedJob] = useState(job || getCurrentFormData());
+  const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -51,6 +52,11 @@ const Modal = ({ isOpen, onClose, job, onSave, onDelete }) => {
   const handleSave = (e) => {
     e.preventDefault();
     onSave(editedJob);
+    onClose();
+  };
+
+  const handleDelete = () => {
+    onDelete(job);
     onClose();
   };
 
@@ -244,7 +250,7 @@ const Modal = ({ isOpen, onClose, job, onSave, onDelete }) => {
               <button
                 className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors"
                 type="button"
-                onClick={() => { onDelete(job); onClose(); }}
+                onClick={() => setIsConfirmDeleteOpen(true)}
               >
                 Delete
               </button>
@@ -259,6 +265,31 @@ const Modal = ({ isOpen, onClose, job, onSave, onDelete }) => {
           </div>
         </form>
       </div>
+
+      {isConfirmDeleteOpen && (
+        <div className="fixed inset-0 bg-stone-800 bg-opacity-50 flex items-center justify-center">
+          <div className="bg-stone-50 p-6 rounded-lg shadow-xl w-full max-w-sm">
+            <h2 className="text-xl font-semibold text-stone-800 mb-4">Confirm Deletion</h2>
+            <p className="text-stone-700 mb-4">Are you sure you want to delete this job application? This action cannot be undone.</p>
+            <div className="flex items-center justify-between">
+              <button
+                className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors"
+                type="button"
+                onClick={handleDelete}
+              >
+                Delete
+              </button>
+              <button
+                className="bg-stone-400 hover:bg-stone-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors"
+                type="button"
+                onClick={() => setIsConfirmDeleteOpen(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
