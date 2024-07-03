@@ -11,7 +11,7 @@ const initialFormData = {
   company_name: '',
   job_title: '',
   application_status: 'Applied',
-  date_applied: dayjs().format('YYYY-MM-DD'),
+  date_applied: dayjs().format('YYYY-MM-DDTHH:mm:ss'),
   job_description: '',
   notes: '',
   application_method: 'Indeed',
@@ -32,7 +32,7 @@ const Modal = ({ isOpen, onClose, job, onSave, onDelete }) => {
   useEffect(() => {
     if (isOpen) {
       if (job) {
-        const localTime = dayjs.utc(job.date_applied).local().format('YYYY-MM-DD');
+        const localTime = dayjs.utc(job.date_applied).local().format('YYYY-MM-DDTHH:mm:ss');
         setEditedJob({ ...job, date_applied: localTime });
       } else {
         setEditedJob(initialFormData);
@@ -226,7 +226,7 @@ const Modal = ({ isOpen, onClose, job, onSave, onDelete }) => {
           <div>
             <label className="block text-sm font-medium text-stone-700">Date Applied</label>
             <input
-              type="date"
+              type="datetime-local"
               name="date_applied"
               value={editedJob.date_applied}
               onChange={handleInputChange}
