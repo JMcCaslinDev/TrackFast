@@ -7,7 +7,7 @@ import utc from 'dayjs/plugin/utc';
 
 dayjs.extend(utc);
 
-const initialFormData = {
+const getCurrentFormData = () => ({
   company_name: '',
   job_title: '',
   application_status: 'Applied',
@@ -24,10 +24,10 @@ const initialFormData = {
   location: '',
   experience_level: 'Entry Level',
   pinned: false,
-};
+});
 
 const Modal = ({ isOpen, onClose, job, onSave, onDelete }) => {
-  const [editedJob, setEditedJob] = useState(job || initialFormData);
+  const [editedJob, setEditedJob] = useState(job || getCurrentFormData());
 
   useEffect(() => {
     if (isOpen) {
@@ -35,7 +35,7 @@ const Modal = ({ isOpen, onClose, job, onSave, onDelete }) => {
         const localTime = dayjs.utc(job.date_applied).local().format('YYYY-MM-DDTHH:mm:ss');
         setEditedJob({ ...job, date_applied: localTime });
       } else {
-        setEditedJob(initialFormData);
+        setEditedJob(getCurrentFormData());
       }
     }
   }, [isOpen, job]);
