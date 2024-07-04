@@ -1,5 +1,3 @@
-// app/dashboard/FeedbackModal.jsx
-
 'use client';
 
 import { useState } from 'react';

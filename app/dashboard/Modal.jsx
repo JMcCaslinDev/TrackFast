@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { X } from 'lucide-react';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
@@ -29,6 +29,7 @@ const getCurrentFormData = () => ({
 const Modal = ({ isOpen, onClose, job, onSave, onDelete }) => {
   const [editedJob, setEditedJob] = useState(job || getCurrentFormData());
   const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false);
+  const modalRef = useRef(null);
 
   useEffect(() => {
     if (isOpen) {
@@ -40,6 +41,24 @@ const Modal = ({ isOpen, onClose, job, onSave, onDelete }) => {
       }
     }
   }, [isOpen, job]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -62,7 +81,7 @@ const Modal = ({ isOpen, onClose, job, onSave, onDelete }) => {
 
   return (
     <div className="fixed inset-0 bg-stone-800 bg-opacity-50 flex items-center justify-center">
-      <div className="bg-stone-50 p-6 rounded-lg shadow-xl w-full max-w-lg max-h-[80vh] overflow-y-auto my-8">
+      <div ref={modalRef} className="bg-stone-50 p-6 rounded-lg shadow-xl w-full max-w-lg max-h-[80vh] overflow-y-auto my-8">
         <div className="flex justify-between items-center mb-2">
           <h2 className="text-xl font-semibold text-stone-800">{job ? 'Edit' : 'Add'} Job Application</h2>
           <button onClick={onClose} className="text-stone-500 hover:text-stone-700">
@@ -70,6 +89,7 @@ const Modal = ({ isOpen, onClose, job, onSave, onDelete }) => {
           </button>
         </div>
         <form onSubmit={handleSave} className="space-y-2">
+          {/* Form Fields */}
           <div>
             <label className="block text-sm font-medium text-stone-700">Job Posting URL</label>
             <input
