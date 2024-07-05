@@ -111,7 +111,7 @@ const DashboardPage = ({ userId }) => {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <ActionButtons onQuickAdd={handleQuickAdd} />
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 overflow-y-auto max-h-[calc(100vh-200px)] p-1">
+        <div className="grid grid-cols-1 gap-6 overflow-y-auto max-h-[calc(100vh-200px)] p-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {sortedJobEntries.map((job) => (
             <JobCard key={job._id} job={job} onClick={handleJobClick} />
           ))}
