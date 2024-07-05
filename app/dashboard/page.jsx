@@ -15,7 +15,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const StatDisplay = ({ icon: Icon, label, value, color }) => (
-  <div className="flex items-center space-x-2">
+  <div className="flex items-center space-x-1">
     <Icon className={`text-${color}`} size={16} />
     <div>
       <p className="text-xs text-stone-500">{label}</p>
@@ -93,7 +93,7 @@ const DashboardPage = ({ userId }) => {
               </div>
               <span className="ml-2 text-xl font-semibold text-stone-800">TrackFast</span>
             </Link>
-            <div className="hidden md:flex space-x-6">
+            <div className="hidden md:flex space-x-6 items-center justify-center flex-grow">
               <StatDisplay icon={Briefcase} label="Applications" value={jobEntries.length} color="teal-600" />
               <StatDisplay icon={User} label="Interviews" value={jobEntries.filter(job => job.application_status === 'Interview').length} color="blue-500" />
               <StatDisplay icon={DollarSign} label="Offers" value={jobEntries.filter(job => job.application_status === 'Offer').length} color="green-500" />
@@ -106,12 +106,18 @@ const DashboardPage = ({ userId }) => {
               Feedback
             </button>
           </div>
+          <div className="md:hidden flex justify-between mt-4">
+            <StatDisplay icon={Briefcase} label="Applications" value={jobEntries.length} color="teal-600" />
+            <StatDisplay icon={User} label="Interviews" value={jobEntries.filter(job => job.application_status === 'Interview').length} color="blue-500" />
+            <StatDisplay icon={DollarSign} label="Offers" value={jobEntries.filter(job => job.application_status === 'Offer').length} color="green-500" />
+            <StatDisplay icon={Calendar} label="Active Days" value="14" color="purple-500" />
+          </div>
         </div>
       </nav>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-32 py-8">
         <ActionButtons onQuickAdd={handleQuickAdd} />
-        <div className="grid grid-cols-1 gap-6 overflow-y-auto max-h-[calc(100vh-200px)] p-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-6 overflow-y-auto max-h-[calc(100vh-200px)] p-1">
           {sortedJobEntries.map((job) => (
             <JobCard key={job._id} job={job} onClick={handleJobClick} />
           ))}
