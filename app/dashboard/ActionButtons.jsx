@@ -1,10 +1,12 @@
+// components/ActionButtons.js
+
 'use client';
 
 import React from 'react';
 
 const ActionButtons = ({ onQuickAdd }) => {
   return (
-    <div className="flex justify-center mb-8 space-x-32">
+    <div className="flex items-center gap-4">
       <button
         onClick={onQuickAdd}
         className="bg-teal-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-teal-600 transition-colors"
@@ -17,7 +19,7 @@ const ActionButtons = ({ onQuickAdd }) => {
         rel="noopener noreferrer"
         className="bg-[#2164F3] text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-600 transition-colors"
       >
-        Indeed
+        Go To Indeed
       </a>
     </div>
   );

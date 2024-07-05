@@ -1,3 +1,5 @@
+// app/dashboard/page.jsx
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -11,6 +13,7 @@ import { deleteJobApplication } from './api/deleteJobApplication';
 import { submitFeedback } from './api/submitFeedback';
 import JobCard from './JobCard';
 import ActionButtons from './ActionButtons';
+import JobFilters from './JobFilters';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -29,10 +32,12 @@ const DashboardPage = ({ userId }) => {
   const [selectedJob, setSelectedJob] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
+  const [sortOrder, setSortOrder] = useState('newest');
+  const [statusFilter, setStatusFilter] = useState('All');
 
   useEffect(() => {
     fetchJobApplications();
-  }, []);
+  }, [sortOrder, statusFilter]);
 
   const fetchJobApplications = async () => {
     try {
@@ -80,12 +85,22 @@ const DashboardPage = ({ userId }) => {
     setIsFeedbackModalOpen(true);
   };
 
-  const sortedJobEntries = [...jobEntries].sort((a, b) => new Date(b.date_applied) - new Date(a.date_applied));
+  const handleSortChange = (newOrder) => {
+    setSortOrder(newOrder);
+  };
+
+  const handleStatusChange = (status) => {
+    setStatusFilter(status);
+  };
+
+  const filteredJobEntries = jobEntries
+    .filter((job) => statusFilter === 'All' || job.application_status === statusFilter)
+    .sort((a, b) => sortOrder === 'newest' ? new Date(b.date_applied) - new Date(a.date_applied) : new Date(a.date_applied) - new Date(b.date_applied));
 
   return (
-    <div className="min-h-screen bg-stone-100">
-      <nav className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-stone-100 flex flex-col items-center">
+      <nav className="bg-white shadow-sm w-full">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="flex justify-between h-16 items-center">
             <Link href="/" className="flex-shrink-0 flex items-center">
               <div>
@@ -115,10 +130,17 @@ const DashboardPage = ({ userId }) => {
         </div>
       </nav>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-32 py-8">
-        <ActionButtons onQuickAdd={handleQuickAdd} />
-        <div className="grid grid-cols-1 gap-6 overflow-y-auto max-h-[calc(100vh-200px)] p-1">
-          {sortedJobEntries.map((job) => (
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-64 py-8 w-full flex flex-col items-center">
+        <div className="flex flex-col w-full gap-4 mb-6 md:flex-row md:justify-between md:items-center">
+          <div className="w-full md:w-auto flex justify-center">
+            <JobFilters onSortChange={handleSortChange} onStatusChange={handleStatusChange} />
+          </div>
+          <div className="w-full md:w-auto flex justify-center">
+            <ActionButtons onQuickAdd={handleQuickAdd} />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 gap-6 overflow-y-auto max-h-[calc(100vh-200px)] p-1 w-full">
+          {filteredJobEntries.map((job) => (
             <JobCard key={job._id} job={job} onClick={handleJobClick} />
           ))}
         </div>
