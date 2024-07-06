@@ -46,7 +46,7 @@ const Login = () => {
         </div>
       </nav>
 
-      <div className="flex items-center justify-center min-h-screen pt-16">
+      <div className="flex items-center justify-center min-h-screen pt-16 px-8">
         <div className="card w-96 bg-base-100 shadow-xl">
           <div className="card-body">
             <h2 className="card-title justify-center">Login</h2>

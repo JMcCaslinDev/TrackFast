@@ -14,6 +14,7 @@ import { submitFeedback } from './api/submitFeedback';
 import JobCard from './JobCard';
 import ActionButtons from './ActionButtons';
 import JobFilters from './JobFilters';
+import Goal from './Goal';  // Import the Goal component
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -134,6 +135,9 @@ const DashboardPage = ({ userId }) => {
         <div className="flex flex-col w-full gap-4 mb-6 md:flex-row md:justify-between md:items-center">
           <div className="w-full md:w-auto flex justify-center">
             <JobFilters onSortChange={handleSortChange} onStatusChange={handleStatusChange} />
+          </div>
+          <div className="w-full md:w-auto flex justify-center">
+            <Goal jobEntries={jobEntries} /> {/* Add the Goal component here */}
           </div>
           <div className="w-full md:w-auto flex justify-center">
             <ActionButtons onQuickAdd={handleQuickAdd} />
