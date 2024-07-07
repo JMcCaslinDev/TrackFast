@@ -9,8 +9,21 @@ const Goal = ({ jobEntries }) => {
   const [appliedToday, setAppliedToday] = useState(0);
 
   useEffect(() => {
-    const today = new Date().toISOString().split('T')[0];
-    const appliedTodayCount = jobEntries.filter(job => job.date_applied === today && job.application_status === 'Applied').length;
+    const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+    console.log("Today's date (local):", today);
+
+    jobEntries.forEach(job => {
+      console.log("Job entry:", job);
+      const jobDateLocal = new Date(job.date_applied).toLocaleDateString('en-CA'); // Convert job date to local date string
+      console.log("Job date_applied (local):", jobDateLocal);
+    });
+
+    const appliedTodayCount = jobEntries.filter(job => {
+      const jobDateLocal = new Date(job.date_applied).toLocaleDateString('en-CA'); // Convert job date to local date string
+      return jobDateLocal === today && job.application_status === 'Applied';
+    }).length;
+
+    console.log("Applied today count:", appliedTodayCount);
     setAppliedToday(appliedTodayCount);
   }, [jobEntries]);
 
