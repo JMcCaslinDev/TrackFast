@@ -1,11 +1,10 @@
+// app/dashboard/Modal.jsx
+
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
 import { X } from 'lucide-react';
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-
-dayjs.extend(utc);
 
 const getCurrentFormData = () => ({
   company_name: '',
@@ -34,10 +33,12 @@ const Modal = ({ isOpen, onClose, job, onSave, onDelete }) => {
   useEffect(() => {
     if (isOpen) {
       if (job) {
-        const localTime = dayjs.utc(job.date_applied).local().format('YYYY-MM-DDTHH:mm:ss');
-        setEditedJob({ ...job, date_applied: localTime });
+        setEditedJob({ ...job });
       } else {
-        setEditedJob(getCurrentFormData());
+        setEditedJob({
+          ...getCurrentFormData(),
+          date_applied: dayjs().format('YYYY-MM-DDTHH:mm:ss')
+        });
       }
     }
   }, [isOpen, job]);
@@ -256,6 +257,7 @@ const Modal = ({ isOpen, onClose, job, onSave, onDelete }) => {
               name="date_applied"
               value={editedJob.date_applied}
               onChange={handleInputChange}
+              step="1" // This enables the input to handle seconds
               className="mt-1 block w-full border border-stone-300 rounded-md shadow-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
           </div>

@@ -17,6 +17,7 @@ import JobFilters from './JobFilters';
 import Goal from './Goal';  // Import the Goal component
 import Image from 'next/image';
 import Link from 'next/link';
+import { getUserTimeZone, toLocalDateString, toUTC } from '../DateConversion/dateUtils'; // Updated import path
 
 const StatDisplay = ({ icon: Icon, label, value, color }) => (
   <div className="flex items-center space-x-1">
@@ -42,7 +43,15 @@ const DashboardPage = ({ userId }) => {
 
   const fetchJobApplications = async () => {
     try {
-      const data = await getJobApplicationsFromServer();
+      const timeZone = getUserTimeZone(); // Get the user's time zone
+      let data = await getJobApplicationsFromServer();
+      console.log("Raw job applications data from server:", data);
+      data = data.map(job => {
+        const localDate = toLocalDateString(job.date_applied, timeZone);
+        console.log(`Job ${job._id} converted date from ${job.date_applied} to ${localDate}`);
+        return { ...job, date_applied: localDate };
+      });
+      console.log("Processed job applications data with local dates:", data);
       setJobEntries(data);
     } catch (error) {
       console.error('Error fetching job applications:', error);
@@ -50,12 +59,17 @@ const DashboardPage = ({ userId }) => {
   };
 
   const handleJobClick = (job) => {
+    console.log("Job clicked:", job);
     setSelectedJob(job);
     setIsModalOpen(true);
   };
 
   const handleSaveJob = async (editedJob) => {
     try {
+      const timeZone = getUserTimeZone();
+      console.log("Saving job:", editedJob);
+      editedJob.date_applied = toUTC(editedJob.date_applied, timeZone); // Convert to UTC before sending to the server
+      console.log("Job date converted to UTC:", editedJob.date_applied);
       if (editedJob._id) {
         await editJobApplication(editedJob._id, editedJob);
       } else {
@@ -70,34 +84,40 @@ const DashboardPage = ({ userId }) => {
 
   const handleDeleteJob = async (job) => {
     try {
+      console.log("Deleting job:", job);
       await deleteJobApplication(job._id);
       await fetchJobApplications();
-      console.log("Deleted Job Application")
     } catch (error) {
       console.error('Error deleting job application:', error);
     }
   };
 
   const handleQuickAdd = () => {
+    console.log("Quick add job");
     setSelectedJob(null);
     setIsModalOpen(true);
   };
 
   const handleFeedbackClick = () => {
+    console.log("Feedback clicked");
     setIsFeedbackModalOpen(true);
   };
 
   const handleSortChange = (newOrder) => {
+    console.log("Sort order changed to:", newOrder);
     setSortOrder(newOrder);
   };
 
   const handleStatusChange = (status) => {
+    console.log("Status filter changed to:", status);
     setStatusFilter(status);
   };
 
   const filteredJobEntries = jobEntries
     .filter((job) => statusFilter === 'All' || job.application_status === statusFilter)
-    .sort((a, b) => sortOrder === 'newest' ? new Date(b.date_applied) - new Date(a.date_applied) : new Date(a.date_applied) - new Date(b.date_applied));
+    .sort((a, b) => (sortOrder === 'newest' ? new Date(b.date_applied) - new Date(a.date_applied) : new Date(a.date_applied) - new Date(b.date_applied)));
+
+  console.log("Filtered job entries:", filteredJobEntries);
 
   return (
     <div className="min-h-screen bg-stone-100 flex flex-col items-center">

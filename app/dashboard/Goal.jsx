@@ -3,23 +3,21 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { getUserTimeZone, toLocalDateString } from '../DateConversion/dateUtils'; // Updated import path
 
 const Goal = ({ jobEntries }) => {
   const [goal, setGoal] = useState(10);
   const [appliedToday, setAppliedToday] = useState(0);
 
   useEffect(() => {
-    const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+    const timeZone = getUserTimeZone(); // Get the user's time zone
+    const today = new Date().toLocaleDateString(undefined, { timeZone }); // Get today's date in user's time zone
     console.log("Today's date (local):", today);
 
-    jobEntries.forEach(job => {
-      console.log("Job entry:", job);
-      const jobDateLocal = new Date(job.date_applied).toLocaleDateString('en-CA'); // Convert job date to local date string
-      console.log("Job date_applied (local):", jobDateLocal);
-    });
-
     const appliedTodayCount = jobEntries.filter(job => {
-      const jobDateLocal = new Date(job.date_applied).toLocaleDateString('en-CA'); // Convert job date to local date string
+      const jobDateLocal = new Date(job.date_applied).toLocaleDateString(undefined, { timeZone }); // Convert job date to local date string
+      console.log("Job entry:", job);
+      console.log("Job date_applied (local):", jobDateLocal);
       return jobDateLocal === today && job.application_status === 'Applied';
     }).length;
 
