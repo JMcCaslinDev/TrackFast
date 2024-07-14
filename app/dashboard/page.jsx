@@ -134,7 +134,7 @@ const DashboardPage = ({ userId }) => {
               <StatDisplay icon={Briefcase} label="Applications" value={jobEntries.length} color="teal-600" />
               <StatDisplay icon={User} label="Interviews" value={jobEntries.filter(job => job.application_status === 'Interview').length} color="blue-500" />
               <StatDisplay icon={DollarSign} label="Offers" value={jobEntries.filter(job => job.application_status === 'Offer').length} color="green-500" />
-              <StatDisplay icon={Calendar} label="Active Days" value="13" color="purple-500" />
+              <StatDisplay icon={Calendar} label="Active Days" value={new Set(jobEntries.map(job => job.date_applied)).size} color="purple-500" />
             </div>
             <button
               className="bg-teal-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-teal-600 transition-colors"
@@ -147,7 +147,7 @@ const DashboardPage = ({ userId }) => {
             <StatDisplay icon={Briefcase} label="Applications" value={jobEntries.length} color="teal-600" />
             <StatDisplay icon={User} label="Interviews" value={jobEntries.filter(job => job.application_status === 'Interview').length} color="blue-500" />
             <StatDisplay icon={DollarSign} label="Offers" value={jobEntries.filter(job => job.application_status === 'Offer').length} color="green-500" />
-            <StatDisplay icon={Calendar} label="Active Days" value="13" color="purple-500" />
+            <StatDisplay icon={Calendar} label="Active Days" value={new Set(jobEntries.map(job => job.date_applied)).size} color="purple-500" />
           </div>
         </div>
       </nav>
