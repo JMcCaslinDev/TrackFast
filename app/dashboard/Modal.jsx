@@ -1,10 +1,9 @@
-// app/dashboard/Modal.jsx
-
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { X } from 'lucide-react';
 import dayjs from 'dayjs';
+import ConfirmationModal from './ConfirmationModal';
 
 const getCurrentFormData = () => ({
   company_name: '',
@@ -31,10 +30,13 @@ const Modal = ({ isOpen, onClose, job, onSave, onDelete }) => {
   const modalRef = useRef(null);
 
   useEffect(() => {
+    console.log("Modal useEffect triggered. isOpen:", isOpen, "job:", job);
     if (isOpen) {
       if (job) {
+        console.log("Setting editedJob with existing job:", job);
         setEditedJob({ ...job });
       } else {
+        console.log("Setting editedJob with new form data");
         setEditedJob({
           ...getCurrentFormData(),
           date_applied: dayjs().format('YYYY-MM-DDTHH:mm:ss')
@@ -45,7 +47,8 @@ const Modal = ({ isOpen, onClose, job, onSave, onDelete }) => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
+      if (modalRef.current && !modalRef.current.contains(event.target) && !isConfirmDeleteOpen) {
+        console.log("Clicked outside modal. Closing.");
         onClose();
       }
     };
@@ -59,24 +62,33 @@ const Modal = ({ isOpen, onClose, job, onSave, onDelete }) => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, isConfirmDeleteOpen]);
 
   if (!isOpen) return null;
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     const fieldValue = type === 'checkbox' ? checked : value;
+    console.log(`Input changed: ${name} = ${fieldValue}`);
     setEditedJob({ ...editedJob, [name]: fieldValue });
   };
 
   const handleSave = (e) => {
     e.preventDefault();
+    console.log("Save button clicked. Saving job:", editedJob);
     onSave(editedJob);
     onClose();
   };
 
   const handleDelete = () => {
-    onDelete(job);
+    console.log("Delete button clicked");
+    setIsConfirmDeleteOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    console.log("Confirm delete clicked");
+    onDelete(editedJob);
+    setIsConfirmDeleteOpen(false);
     onClose();
   };
 
@@ -85,12 +97,15 @@ const Modal = ({ isOpen, onClose, job, onSave, onDelete }) => {
       <div ref={modalRef} className="bg-stone-50 p-6 rounded-lg shadow-xl w-full max-w-lg max-h-[80vh] overflow-y-auto my-8">
         <div className="flex justify-between items-center mb-2">
           <h2 className="text-xl font-semibold text-stone-800">{job ? 'Edit' : 'Add'} Job Application</h2>
-          <button onClick={onClose} className="text-stone-500 hover:text-stone-700">
+          <button onClick={() => {
+            console.log("Close button clicked");
+            onClose();
+          }} className="text-stone-500 hover:text-stone-700">
             <X size={24} />
           </button>
         </div>
         <form onSubmit={handleSave} className="space-y-2">
-          {/* Form Fields */}
+          {/* Input fields */}
           <div>
             <label className="block text-sm font-medium text-stone-700">Job Posting URL</label>
             <input
@@ -257,7 +272,7 @@ const Modal = ({ isOpen, onClose, job, onSave, onDelete }) => {
               name="date_applied"
               value={editedJob.date_applied}
               onChange={handleInputChange}
-              step="1" // This enables the input to handle seconds
+              step="1"
               className="mt-1 block w-full border border-stone-300 rounded-md shadow-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
           </div>
@@ -272,7 +287,7 @@ const Modal = ({ isOpen, onClose, job, onSave, onDelete }) => {
               <button
                 className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors"
                 type="button"
-                onClick={() => setIsConfirmDeleteOpen(true)}
+                onClick={handleDelete}
               >
                 Delete
               </button>
@@ -280,7 +295,10 @@ const Modal = ({ isOpen, onClose, job, onSave, onDelete }) => {
             <button
               className="bg-stone-400 hover:bg-stone-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors"
               type="button"
-              onClick={onClose}
+              onClick={() => {
+                console.log("Cancel button clicked");
+                onClose();
+              }}
             >
               Cancel
             </button>
@@ -288,30 +306,12 @@ const Modal = ({ isOpen, onClose, job, onSave, onDelete }) => {
         </form>
       </div>
 
-      {isConfirmDeleteOpen && (
-        <div className="fixed inset-0 bg-stone-800 bg-opacity-50 flex items-center justify-center">
-          <div className="bg-stone-50 p-6 rounded-lg shadow-xl w-full max-w-sm">
-            <h2 className="text-xl font-semibold text-stone-800 mb-4">Confirm Deletion</h2>
-            <p className="text-stone-700 mb-4">Are you sure you want to delete this job application? This action cannot be undone.</p>
-            <div className="flex items-center justify-between">
-              <button
-                className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors"
-                type="button"
-                onClick={handleDelete}
-              >
-                Delete
-              </button>
-              <button
-                className="bg-stone-400 hover:bg-stone-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors"
-                type="button"
-                onClick={() => setIsConfirmDeleteOpen(false)}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <ConfirmationModal
+        isOpen={isConfirmDeleteOpen}
+        onClose={() => setIsConfirmDeleteOpen(false)}
+        onConfirm={handleConfirmDelete}
+        message="Are you sure you want to delete this job application? This action cannot be undone."
+      />
     </div>
   );
 };

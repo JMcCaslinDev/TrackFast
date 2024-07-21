@@ -1,5 +1,3 @@
-// app/dashboard/page.jsx
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -14,10 +12,10 @@ import { submitFeedback } from './api/submitFeedback';
 import JobCard from './JobCard';
 import ActionButtons from './ActionButtons';
 import JobFilters from './JobFilters';
-import Goal from './Goal';  // Import the Goal component
+import Goal from './Goal';
 import Image from 'next/image';
 import Link from 'next/link';
-import { getUserTimeZone, toLocalDateString, toUTC } from '../DateConversion/dateUtils'; // Updated import path
+import { getUserTimeZone, toLocalDateString, toUTC } from '../DateConversion/dateUtils';
 
 const StatDisplay = ({ icon: Icon, label, value, color }) => (
   <div className="flex items-center space-x-1">
@@ -38,12 +36,14 @@ const DashboardPage = ({ userId }) => {
   const [statusFilter, setStatusFilter] = useState('All');
 
   useEffect(() => {
+    console.log("DashboardPage useEffect triggered");
     fetchJobApplications();
   }, [sortOrder, statusFilter]);
 
   const fetchJobApplications = async () => {
     try {
-      const timeZone = getUserTimeZone(); // Get the user's time zone
+      console.log("Fetching job applications");
+      const timeZone = getUserTimeZone();
       let data = await getJobApplicationsFromServer();
       console.log("Raw job applications data from server:", data);
       data = data.map(job => {
@@ -68,7 +68,7 @@ const DashboardPage = ({ userId }) => {
     try {
       const timeZone = getUserTimeZone();
       console.log("Saving job:", editedJob);
-      editedJob.date_applied = toUTC(editedJob.date_applied, timeZone); // Convert to UTC before sending to the server
+      editedJob.date_applied = toUTC(editedJob.date_applied, timeZone);
       console.log("Job date converted to UTC:", editedJob.date_applied);
       if (editedJob._id) {
         await editJobApplication(editedJob._id, editedJob);
@@ -82,11 +82,14 @@ const DashboardPage = ({ userId }) => {
     }
   };
 
-  const handleDeleteJob = async (job) => {
+  const handleDeleteJob = async (jobToDelete) => {
+    console.log("handleDeleteJob called with:", jobToDelete);
     try {
-      console.log("Deleting job:", job);
-      await deleteJobApplication(job._id);
+      console.log("Attempting to delete job:", jobToDelete);
+      await deleteJobApplication(jobToDelete._id);
+      console.log("Job deleted successfully");
       await fetchJobApplications();
+      setIsModalOpen(false);
     } catch (error) {
       console.error('Error deleting job application:', error);
     }
@@ -158,7 +161,7 @@ const DashboardPage = ({ userId }) => {
             <JobFilters onSortChange={handleSortChange} onStatusChange={handleStatusChange} />
           </div>
           <div className="w-full md:w-auto flex justify-center">
-            <Goal jobEntries={jobEntries} /> {/* Add the Goal component here */}
+            <Goal jobEntries={jobEntries} />
           </div>
           <div className="w-full md:w-auto flex justify-center">
             <ActionButtons onQuickAdd={handleQuickAdd} />
@@ -174,7 +177,10 @@ const DashboardPage = ({ userId }) => {
       {isModalOpen && (
         <Modal
           isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
+          onClose={() => {
+            console.log("Closing modal");
+            setIsModalOpen(false);
+          }}
           job={selectedJob}
           onSave={handleSaveJob}
           onDelete={handleDeleteJob}
