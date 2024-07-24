@@ -55,12 +55,25 @@ export async function GET(request) {
   console.log('Cleared loginToken and tokenExpiry from account');
 
   const response = NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/dashboard`);
+
+  // Set the main cookie for the web application
   response.cookies.set('token', jwtToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     maxAge: 3600 * numberOfHours,
     path: '/',
+    sameSite: 'Lax',
   });
+
+  // Set a secondary cookie for the Chrome extension (only if token is needed in both environments)
+  response.cookies.set('extension_token', jwtToken, {
+    httpOnly: false,  // Accessible to JavaScript
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 3600 * numberOfHours,
+    path: '/',
+    sameSite: 'Lax',  // or 'None' if you need to support cross-origin requests
+  });
+
   console.log('Redirecting to /dashboard with JWT token in cookies');
 
   return response;
