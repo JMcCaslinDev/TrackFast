@@ -134,7 +134,7 @@ const DashboardPage = ({ userId }) => {
               <span className="ml-2 text-xl font-semibold text-stone-800">TrackFast</span>
             </Link>
             <div className="hidden md:flex space-x-6 items-center justify-center flex-grow">
-              <StatDisplay icon={Briefcase} label="Applications" value={jobEntries.length} color="teal-600" />
+              <StatDisplay icon={Briefcase} label="Applications" value={jobEntries.filter(job => job.application_status === 'Applied').length} color="teal-600" />
               <StatDisplay icon={User} label="Interviews" value={jobEntries.filter(job => job.application_status === 'Interview').length} color="blue-500" />
               <StatDisplay icon={DollarSign} label="Offers" value={jobEntries.filter(job => job.application_status === 'Offer').length} color="green-500" />
               <StatDisplay icon={Calendar} label="Active Days" value={new Set(jobEntries.map(job => job.date_applied)).size} color="purple-500" />

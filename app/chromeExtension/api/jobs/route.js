@@ -2,8 +2,8 @@
 
 import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
-import { connectToDatabase } from '../../../../../mongodb/api/connect';
-import Job_Application from '../../../../../mongodb/jobApplicationModel'; // Adjust the import to your model's location
+import { connectToDatabase } from '../../../mongodb/api/connect';
+import Job_Application from '../../../mongodb/jobApplicationModel'; // Adjust the import to your model's location
 
 export async function POST(request) {
   try {
@@ -17,13 +17,16 @@ export async function POST(request) {
 
     const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : authHeader;
 
-    return jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
-      if (err) {
-        return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      console.log('Decoded token:', decoded);
+      const userId = decoded.userId;  // Ensure that this is correctly extracted from the token
+      console.log('User ID from token:', userId);
+      if (!userId) {
+        throw new Error('Account ID not found in token');
       }
 
-      const accountId = decoded.accountId;
-      console.log("\naccountId: ", accountId, "\n");
+      console.log("\nuserId: ", userId, "\n");
 
       const base_pay = jobData.base_pay ? parseFloat(jobData.base_pay) : 0.0;
       const max_pay = jobData.max_pay ? parseFloat(jobData.max_pay) : 0.0;
@@ -31,7 +34,7 @@ export async function POST(request) {
       const date_applied = jobData.date_applied ? new Date(jobData.date_applied) : new Date();
 
       const formattedJobData = {
-        account_id: accountId,
+        account_id: userId,
         job_title: jobData.job_title || '',
         company_name: jobData.company_name || '',
         employment_type: jobData.employment_type || '',
@@ -56,7 +59,11 @@ export async function POST(request) {
         console.log('Formatted Job Data:', formattedJobData);
         console.log('Formatted Job Data Types:', Object.entries(formattedJobData).map(([key, value]) => `${key}: ${typeof value}`));
         await newJobApplication.save();
-        return NextResponse.json({ message: 'Job saved successfully', data: newJobApplication }, { status: 201 });
+
+        // Convert the Mongoose document to a plain object before returning it
+        const plainJobApplication = newJobApplication.toObject();
+
+        return NextResponse.json({ message: 'Job saved successfully', data: plainJobApplication }, { status: 201 });
       } catch (error) {
         console.error('MongoDB Error:', error);
         if (error.name === 'MongoServerError' && error.code === 121) {
@@ -80,7 +87,10 @@ export async function POST(request) {
           }, { status: 500 });
         }
       }
-    });
+    } catch (error) {
+      console.error('Token verification failed:', error.message);
+      return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
+    }
   } catch (error) {
     console.error('Unexpected Error:', error);
     return NextResponse.json({

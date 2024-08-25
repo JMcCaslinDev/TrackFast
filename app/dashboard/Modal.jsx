@@ -259,6 +259,7 @@ const Modal = ({ isOpen, onClose, job, onSave, onDelete }) => {
               onChange={handleInputChange}
               className="mt-1 block w-full border border-stone-300 rounded-md shadow-sm py-1 px-2 focus:outline-none focus:ring-2 focus:ring-teal-500"
             >
+              <option value="To Apply">To Apply</option>
               <option value="Applied">Applied</option>
               <option value="Interview">Interview</option>
               <option value="Offer">Offer</option>
