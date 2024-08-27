@@ -13,7 +13,7 @@ const Footer = () => {
               <strong className="font-extrabold tracking-tight text-base md:text-lg">TrackFast</strong>
             </Link>
             <p className="mt-3 text-sm text-base-content/80">
-              Simplify your job search with TrackFast's quick add One click tracking features for efficient application tracking.
+              Simplify your job search with TrackFast&aposs quick add One click tracking features for efficient application tracking.
             </p>
             <p className="mt-3 text-sm text-base-content/60">
               &copy; {new Date().getFullYear()} TrackFast. All rights reserved.
