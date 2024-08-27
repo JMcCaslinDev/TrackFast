@@ -28,31 +28,29 @@ const PricingSection = () => {
                   <svg xmlns="http://www.w3.org/2000/svg" className="w-[18px] h-[18px] opacity-80 shrink-0" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
-                  <span>Unlimited job applications</span>
+                  <span>One-Click Job Tracking</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <svg xmlns="http://www.w3.org/2000/svg" className="w-[18px] h-[18px] opacity-80 shrink-0" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
-                  <span>Quick add with URL assist</span>
+                  <span>Quickly Add Unlimited Job Applications</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <svg xmlns="http://www.w3.org/2000/svg" className="w-[18px] h-[18px] opacity-80 shrink-0" viewBox="0 0 20 20" fill="currentColor">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
-                  <span>Set daily goals and track your progress effortlessly</span>
+                  <span>Keep All Your Job Applications in One Place</span> 
                 </li>
               </ul>
               <div className="space-y-2">
-                <Link href="/signup">
-                  <button className="btn btn-primary btn-block group">
-                    Get Started
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-[18px] h-[18px] fill-white/10 group-hover:translate-x-0.5 group-hover:fill-white/20 transition-transform duration-200">
-                      <path d="m3 3 3 9-3 9 19-9Z"></path>
-                      <path d="M6 12h16"></path>
-                    </svg>
-                  </button>
-                </Link>
+              <Link 
+                href="/signup" 
+                className="btn btn-primary btn-block !btn-wide flex items-center justify-center text-2xl font-bold shadow-md hover:shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-105"
+                style={{ padding: '0.75rem 1.5rem', height: 'auto' }}
+              >
+                <span className="block w-full text-center">Get Started</span>
+              </Link>
               </div>
             </div>
           </div>

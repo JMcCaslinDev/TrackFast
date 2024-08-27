@@ -26,7 +26,7 @@ const FeedbackModal = ({ isOpen, onClose, userId, submitFeedback }) => {
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50" onClick={onClose}>
       <div className="bg-white rounded-lg p-6 max-w-lg w-full" onClick={(e) => e.stopPropagation()}>
         <h2 className="text-xl font-semibold mb-4">Submit Feedback</h2>
-        <p className="text-sm text-gray-600 mb-4">Feedback can be issues, bugs found, features wanted, etc. Please include a contact method to be responded to.</p>
+        <p className="text-sm text-gray-600 mb-4">Feedback can be issues, bugs found, features wanted, etc. Please include a contact method if relevant. Thank you!</p>
         <form onSubmit={handleSubmit}>
           <textarea
             className="w-full p-2 border rounded-md"

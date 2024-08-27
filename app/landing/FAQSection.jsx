@@ -7,40 +7,28 @@ const FAQSection = () => {
 
   const faqs = [
     {
-      question: 'Why do I need TrackFast?',
-      answer: 'To streamline job search and save time during the process.',
+      question: 'Why should I try TrackFast?',
+      answer: 'TrackFast makes your job search easier and more efficient. With our Chrome extension, you can save job applications from LinkedIn and Indeed with just one click. Stay organized, reduce the time spent on applying, and focus on landing your next great opportunity faster.',
     },
     {
-      question: 'Is there a subscription model for TrackFast?',
-      answer: 'No, TrackFast is available through a one-time purchase of $29 only.',
-    },
-    {
-      question: 'Does TrackFast support application tracking for multiple job platforms?',
-      answer: 'Yes, TrackFast supports tracking applications from multiple job platforms including LinkedIn and Indeed.',
+      question: 'What is the Quick Add feature?',
+      answer: 'Quick Add lets you effortlessly enter an unlimited number of job applications with our optimized forms, designed to minimize clicks and save you time. This feature is ideal for job seekers who want to streamline their search and focus on landing their next opportunity faster',
     },
     {
       question: 'Can I use TrackFast on mobile devices?',
       answer: 'TrackFast is optimized for use on desktop browsers to provide the best user experience.',
     },
     {
-      question: 'Is my personal information secure with TrackFast?',
-      answer: 'Absolutely, we use advanced encryption to ensure all your data is secure.',
-    },
-    {
-      question: 'Can I manually add job applications to TrackFast?',
-      answer: 'Yes, you can manually enter each job application\'s details into TrackFast.',
+      question: 'How often is TrackFast updated with new features?',
+      answer: 'We continuously work to improve TrackFast and release updates as new features are developed.',
     },
     {
       question: 'Are there any hidden fees or additional costs with TrackFast?',
       answer: 'No, there are no hidden fees; the one-time purchase gives you full access to all features.',
     },
     {
-      question: 'How can I update my job application information in TrackFast?',
-      answer: 'You can easily update or modify any application details at any time within TrackFast.',
-    },
-    {
-      question: 'How often is TrackFast updated with new features?',
-      answer: 'We continuously work to improve TrackFast and release updates as new features are developed.',
+      question: 'Is my personal information secure with TrackFast?',
+      answer: 'Absolutely, we use advanced encryption to ensure all your data is secure.',
     },
   ];
 
@@ -52,7 +40,7 @@ const FAQSection = () => {
   };
 
   return (
-    <section className="bg-base-200" id="faq">
+    <section className="bg-base-300" id="faq">
       <div className="py-24 px-8 max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row gap-12">
           <div className="flex flex-col text-left md:basis-1/2">

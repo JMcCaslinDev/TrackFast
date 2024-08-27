@@ -7,14 +7,8 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+  --form-background-color: #f0f0f0; /* Light grey for form backgrounds */
+  --input-background-color: #ffffff; /* White for input fields */
 }
 
 html, body {
@@ -29,6 +23,16 @@ html, body {
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+}
+
+.modal, .form, .input, .textarea {
+  background-color: var(--form-background-color) !important;
+  color: rgb(var(--foreground-rgb)) !important;
+}
+
+.input, .textarea {
+  background-color: var(--input-background-color) !important;
+  border: 1px solid rgb(var(--foreground-rgb));
 }
 
 @layer utilities {
